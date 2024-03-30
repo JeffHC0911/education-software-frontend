@@ -1,0 +1,21 @@
+.title-login{
+    font-size: 3rem;
+    font-weight: 700;
+    color: #EDF0FF;
+    margin-top: 10px;
+}
+
+.image{
+    margin-top: 50px;
+    width: 50%;
+    height: 20%;
+}
+
+.input-login{
+    margin-bottom: 10px;
+}
+
+.btnSubmit {
+    cursor: pointer;
+  
+  }

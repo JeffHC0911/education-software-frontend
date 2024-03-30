@@ -1,0 +1,10 @@
+export * from './components/NavbarComponent'
+export * from './components/CardComponent.jsx'
+export * from './components/ModalComponent'
+export * from './components/TableComponent'
+
+export * from './layouts/TeacherLayout.jsx'
+
+export * from './pages/RegisterCouse'
+export * from './pages/RegisterStudent'
+export * from './pages/HomePage'

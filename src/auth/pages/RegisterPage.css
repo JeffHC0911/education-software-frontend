@@ -1,0 +1,36 @@
+.title-register{
+    font-size: 3rem;
+    font-weight: 700;
+    color: #EDF0FF;
+}
+
+.image{
+    margin-top: 50px;
+    width: 50%;
+    height: 20%;
+}
+
+.input-register{
+    margin-bottom: 10px;
+}
+
+/* Seleccionamos el botón */
+.btnSubmit {
+    /* Propiedades generales */
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  
+    /* Colores */
+    background-color: #140f50;
+    color: #dd0b0b;
+  
+  }
+  
+  
