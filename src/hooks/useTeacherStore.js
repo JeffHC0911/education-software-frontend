@@ -59,11 +59,11 @@ export const useTeacherStore = () => {
         try {
             if (course.id) {
                 await educationSoftApi.put(`/course/${course.id}`, course);
-                dispatch(onUpdateCourse({ ...course, user }));
+                dispatch(onUpdateCourse({ ...course }));
                 return;
             }
             const { data } = await educationSoftApi.post('/course', course);
-            dispatch(onAddNewCourse({ ...course, id: data.course.id, user }));
+            dispatch(onAddNewCourse({ ...course, id: data.course.id }));
         } catch (error) {
             console.log(error);
             Swal.fire('Error al guardar el curso', error.message, 'error');
@@ -97,11 +97,11 @@ export const useTeacherStore = () => {
         try {
             if (student.id) {
                 await educationSoftApi.put(`/student/${student.id}`, student);
-                dispatch(onUpdateStudent({ ...student, user }));
+                dispatch(onUpdateStudent({ ...student }));
                 return;
             }
             const { data } = await educationSoftApi.post('/student', student);
-            dispatch(onAddNewStudent({ ...student, id: data.student.id, user }));
+            dispatch(onAddNewStudent({ ...student, id: data.student.id }));
         } catch (error) {
             console.log(error);
             Swal.fire('Error al guardar el estudiante', error.message, 'error');

@@ -5,10 +5,11 @@ import { useState } from "react";
 import { Button, Modal } from "keep-react";
 import { CloudArrowUp } from "phosphor-react";
 import { useTeacherStore } from '../../hooks';
-import { TableComponent } from '../index';
+import { TableComponent, RegisterStudentComponent } from '../index';
 
 export const ModalComponent = ({ courseId }) => {
   const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState('table')
   const { startLoadingStudentsByCourse } = useTeacherStore();
 
   const handleOpenModal = () => {
@@ -19,6 +20,10 @@ export const ModalComponent = ({ courseId }) => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
+
+  const handleSwitchContent = (content) => {
+    setModalContent(content);
+  }
 
   return (
     <>
@@ -33,10 +38,24 @@ export const ModalComponent = ({ courseId }) => {
         <Modal.Body>
           <div className="overflow-auto max-h-[400px]">
             {/* Pasamos el courseId al TableComponent */}
-            <TableComponent courseId={courseId} />
+            {modalContent === 'table' ?
+              (<TableComponent courseId={courseId} />
+              ) : (
+                <RegisterStudentComponent />
+              )}
           </div>
         </Modal.Body>
         <Modal.Footer>
+          {/* Añade un botón para cambiar entre los contenidos */}
+          {modalContent === 'table' ? (
+            <Button type="outlineGray" onClick={() => handleSwitchContent('register')}>
+              Add Student
+            </Button>
+          ) : (
+            <Button type="outlineGray" onClick={() => handleSwitchContent('table')}>
+              Back to Table
+            </Button>
+          )}
           <Button type="outlineGray" onClick={handleCloseModal}>
             Cancel
           </Button>

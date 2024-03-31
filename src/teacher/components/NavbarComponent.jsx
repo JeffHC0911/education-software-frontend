@@ -8,7 +8,7 @@ import Logo from '../../assets/img/fondo2.svg'
 
 export const NavbarComponent = () => {
 
-    const { startLogout, user } = useAuthStore();
+    const { startLogout } = useAuthStore();
 
     return (
         <Navbar fluid={true}>

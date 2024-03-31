@@ -4,7 +4,7 @@
 'use client'
 //import Image from 'next/image'
 import { useEffect } from 'react'
-import { Avatar, Badge, Button, Popover, Table } from 'keep-react'
+import { Badge, Button, Popover, Table } from 'keep-react'
 import { ArrowDown, Check, Cube, DotsThreeOutline, Pencil, Trash } from 'phosphor-react'
 import { useTeacherStore } from '../../hooks'
 
@@ -124,7 +124,6 @@ export const TableComponent = ({ courseId }) => {
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
-                      <Avatar shape="circle" img={`/images/avatar/avatar-${1}.png`} size="md" />
                       <div>
                         <p className="-mb-0.5 text-body-4 font-medium text-metal-600">{student.name}</p>
                         <span>{student.lastname}</span>

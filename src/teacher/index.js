@@ -2,6 +2,7 @@ export * from './components/NavbarComponent'
 export * from './components/CardComponent.jsx'
 export * from './components/ModalComponent'
 export * from './components/TableComponent'
+export * from './components/RegisterStudentComponent'
 
 export * from './layouts/TeacherLayout.jsx'
 
