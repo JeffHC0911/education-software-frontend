@@ -57,8 +57,8 @@ export const useTeacherStore = () => {
 
     const startSavingCourse = async (course) => {
         try {
-            if (course.id) {
-                await educationSoftApi.put(`/course/${course.id}`, course);
+            if (course._id) {
+                await educationSoftApi.put(`/course/${course._id}`, course);
                 dispatch(onUpdateCourse({ ...course }));
                 return;
             }
@@ -93,6 +93,17 @@ export const useTeacherStore = () => {
 
     }
 
+    const startLoadingCoursesById = async (courseId) => {
+        try {
+            const { data } = await educationSoftApi.get(`/course/${courseId}`);
+            dispatch(onLoadCourses(data.courses));
+            return data;
+        } catch (error) {
+            console.log("Error al cargar los courses: ", error);
+            //Swal.fire('Error al cargar los cursos', error.message, 'error');
+        }
+    }
+
     const startSavingStudent = async (student) => {
         try {
             if (student.id) {
@@ -102,6 +113,7 @@ export const useTeacherStore = () => {
             }
             const { data } = await educationSoftApi.post('/student', student);
             dispatch(onAddNewStudent({ ...student, id: data.student.id }));
+            return data.student;
         } catch (error) {
             console.log(error);
             Swal.fire('Error al guardar el estudiante', error.message, 'error');
@@ -227,6 +239,7 @@ export const useTeacherStore = () => {
         startDeletingSubject,
         startLoadingAssesments,
         startLoadingCourses,
+        startLoadingCoursesById,
         startLoadingGrade,
         startLoadingStudents,
         startLoadingStudentsByCourse,

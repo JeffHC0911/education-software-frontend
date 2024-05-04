@@ -23,7 +23,7 @@ export const TableComponent = ({ courseId }) => {
 
   /**
    * Filtra las evaluaciones que coinciden con el curso del profesor
-   */
+   */ 
 
   // const assesmentCourses = filterAssesments
   // .map(assesment => ({

@@ -41,7 +41,7 @@ export const ModalComponent = ({ courseId }) => {
             {modalContent === 'table' ?
               (<TableComponent courseId={courseId} />
               ) : (
-                <RegisterStudentComponent />
+                <RegisterStudentComponent courseId={courseId} />
               )}
           </div>
         </Modal.Body>
