@@ -7,7 +7,7 @@ import { useTeacherStore } from '../../hooks'
 
 export const RegisterStudentComponent = ({ courseId }) => {
 
-    const { startSavingStudent, startSavingCourse, startLoadingCoursesById } = useTeacherStore();
+    const { startSavingStudent, startSavingCourse, startLoadingCoursesById, startLoadingCourses } = useTeacherStore();
 
     const [formValue, setFormValue] = useState({
         name: '',
@@ -19,6 +19,14 @@ export const RegisterStudentComponent = ({ courseId }) => {
         setFormValue({
             ...formValue,
             [target.name]: target.value,
+        });
+    };
+
+    const resetForm = () => {
+        setFormValue({
+            name: '',
+            lastname: '',
+            email: ''
         });
     };
 
@@ -42,6 +50,8 @@ export const RegisterStudentComponent = ({ courseId }) => {
 
 
                 await startSavingCourse(updatedCourse);
+                await startLoadingCourses();
+                //resetForm();
             } else {
                 console.error('No se encontró la propiedad students en los datos del curso');
                 //Swal.fire('Error', 'No se encontró la propiedad students en los datos del curso', 'error');

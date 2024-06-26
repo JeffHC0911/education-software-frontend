@@ -114,6 +114,7 @@ export const useTeacherStore = () => {
             }
             const { data } = await educationSoftApi.post('/student', student);
             dispatch(onAddNewStudent({ ...student, id: data.student.id }));
+            Swal.fire('Estudiante guardado', 'El estudiante se ha guardado correctamente', 'success');
             return data.student;
         } catch (error) {
             console.log(error);
