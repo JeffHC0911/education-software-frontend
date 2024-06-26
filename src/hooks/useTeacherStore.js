@@ -59,11 +59,12 @@ export const useTeacherStore = () => {
         try {
             if (course._id) {
                 await educationSoftApi.put(`/course/${course._id}`, course);
-                dispatch(onUpdateCourse({ ...course }));
+                dispatch(onUpdateCourse({ ...course, user }));
                 return;
             }
             const { data } = await educationSoftApi.post('/course', course);
-            dispatch(onAddNewCourse({ ...course, id: data.course.id }));
+            dispatch(onAddNewCourse({ ...course, id: data.course.id, user }));
+            Swal.fire('Curso guardado', 'El curso se ha guardado correctamente', 'success');
         } catch (error) {
             console.log(error);
             Swal.fire('Error al guardar el curso', error.message, 'error');
