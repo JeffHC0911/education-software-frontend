@@ -3,6 +3,8 @@ export * from './components/CardComponent.jsx'
 export * from './components/ModalComponent'
 export * from './components/TableComponent'
 export * from './components/RegisterStudentComponent'
+export * from './components/AddGradesComponent.jsx'
+export * from './components/AddAssesmentsComponent.jsx'
 
 export * from './layouts/TeacherLayout.jsx'
 

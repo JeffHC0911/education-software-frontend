@@ -22,14 +22,6 @@ export const RegisterStudentComponent = ({ courseId }) => {
         });
     };
 
-    const resetForm = () => {
-        setFormValue({
-            name: '',
-            lastname: '',
-            email: ''
-        });
-    };
-
     const onSubmit = async (event) => {
         event.preventDefault();
 
