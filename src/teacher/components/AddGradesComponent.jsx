@@ -3,20 +3,21 @@ import { useState } from "react";
 import { Label, TextInput, Button, Dropdown } from "keep-react";
 import { useTeacherStore } from "../../hooks";
 
-export const AddGradesComponent = ({ courseId }) => {
+export const AddGradesComponent = ({ courseId, studentId }) => {
   const { students, assesments, startSavingGrades } = useTeacherStore();
 
   const [formValue, setFormValue] = useState({
-    studentId: "",
-    grades: {}, // Aquí almacenaremos las notas de las evaluaciones
+    grades: {},
+    studentId: studentId || "",
   });
 
   const onInputChanged = ({ target }) => {
     const { name, value } = target;
-  
-    // Si el nombre del campo incluye 'grade-', se trata de una nota de evaluación
-    if (name.startsWith('grade-')) {
-      const assessmentId = name.split('grade-')[1]; // Extraer el ID de la evaluación
+    const assessmentId = name.split("grade-")[1]; // Extrae el ID de la evaluación
+
+    // Validar que el valor sea un número
+    if (!isNaN(value)) {
+      // Actualiza las notas en el estado
       setFormValue((prevFormValue) => ({
         ...prevFormValue,
         grades: {
@@ -24,14 +25,8 @@ export const AddGradesComponent = ({ courseId }) => {
           [assessmentId]: value,
         },
       }));
-    } else {
-      setFormValue({
-        ...formValue,
-        [target.name]: target.value,
-      });
     }
   };
-  
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -48,7 +43,9 @@ export const AddGradesComponent = ({ courseId }) => {
   const filterAssesments = assesments.filter(
     (assesment) => assesment.course._id === courseId
   );
-  //console.log(filterAssesments);
+
+  const student = students.find((student) => student._id === studentId);
+  console.log("student", student);
 
   return (
     <div>
@@ -60,51 +57,36 @@ export const AddGradesComponent = ({ courseId }) => {
             value="Select Student"
             className="text-xl"
           />
-          <select
-            id="id-student-select"
-            className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-            name="studentId"
-            value={formValue.studentId}
-            onChange={onInputChanged}
-          >
-            <option value="">Select a student</option>
-            {students.map((student) => (
-              <option key={student._id} value={student.id}>
+          {/* Muestra información del estudiante seleccionado */}
+          {student && (
+            <div className="mb-8 ml-8 mr-8">
+              <p className="text-xl font-semibold">
                 {student.name} {student.lastname}
-              </option>
-            ))}
-          </select>
+              </p>
+            </div>
+          )}
         </div>
 
-        <div className="mb-8 ml-8 mr-8 shadow-xl lg:mb-4">
-          <Label htmlFor="#id-grade-input" value="Grade" className="text-xl" />
-          <TextInput
-            id="id-grade-input"
-            placeholder="Enter grade"
-            color="gray"
-            name="grade"
-            sizing="lg"
-            value={formValue.grade}
-            onChange={onInputChanged}
-          />
+        <div className="mb-8 ml-8 mr-8 lg:mb-4">
+          {filterAssesments.map((assessment) => (
+            <div className="mb-4" key={assessment._id}>
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor={`grade-${assessment._id}`}
+              >
+                {assessment.name} ({assessment.weighted}%)
+              </label>
+              <input
+                type="number"
+                id={`grade-${assessment._id}`}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                name={`grade-${assessment._id}`}
+                value={formValue.grades[assessment._id] || ""}
+                onChange={onInputChanged}
+              />
+            </div>
+          ))}
         </div>
-        {filterAssesments.map((assessment) => (
-          <div className="mb-4" key={assessment._id}>
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor={`grade-${assessment._id}`}
-            >
-              {assessment.name} ({assessment.weight}%)
-            </label>
-            <input
-              type="number"
-              id={`grade-${assessment._id}`}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              //value={grades[assessment.id] || ""}
-              //onChange={(event) => handleGradeChange(event, assessment._id)}
-            />
-          </div>
-        ))}
 
         <div className="flex justify-around mb-8">
           <div className="button text-center">
