@@ -4,25 +4,27 @@ import { Label, TextInput, Button, Dropdown } from "keep-react";
 import { useTeacherStore } from "../../hooks";
 
 export const AddGradesComponent = ({ courseId, studentId }) => {
-  const { students, assesments, startSavingGrades } = useTeacherStore();
+  const { students, assesments, startSavingGrade } = useTeacherStore();
 
   const [formValue, setFormValue] = useState({
     grades: {},
-    studentId: studentId || "",
+    student: studentId || "",
   });
+
+  //console.log(studentId);
 
   const onInputChanged = ({ target }) => {
     const { name, value } = target;
     const assessmentId = name.split("grade-")[1]; // Extrae el ID de la evaluación
 
     // Validar que el valor sea un número
-    if (!isNaN(value)) {
+    if (!isNaN(value) && value.trim() !== ""){
       // Actualiza las notas en el estado
       setFormValue((prevFormValue) => ({
         ...prevFormValue,
         grades: {
           ...prevFormValue.grades,
-          [assessmentId]: value,
+          [assessmentId]: Number(value),
         },
       }));
     }
@@ -31,7 +33,18 @@ export const AddGradesComponent = ({ courseId, studentId }) => {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      await startSavingGrades(formValue);
+      const gradesToSave = Object.keys(formValue.grades).map(
+        (assessmentId) => ({
+          value: formValue.grades[assessmentId],
+          student: studentId,
+          assessmentId, // Incluye assessmentId en el objeto grade
+        })
+      );
+
+      for (const grade of gradesToSave) {
+        await startSavingGrade(grade);
+      }
+
       // Handle successful save (e.g., reset form, show success message, etc.)
     } catch (error) {
       console.error("Error saving grades", error.message);
@@ -45,7 +58,7 @@ export const AddGradesComponent = ({ courseId, studentId }) => {
   );
 
   const student = students.find((student) => student._id === studentId);
-  console.log("student", student);
+  //console.log("student", student);
 
   return (
     <div>
