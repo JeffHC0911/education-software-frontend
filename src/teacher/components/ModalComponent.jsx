@@ -36,9 +36,7 @@ export const ModalComponent = ({ courseId }) => {
           courseId={courseId}
         />
       );
-    } else if (modalContent === "addGrades") {
-      return <AddGradesComponent courseId={courseId} />;
-    } else if(modalContent === "add-assesment"){
+    }else if(modalContent === "add-assesment"){
       return <AddAssesmentsComponent courseId={courseId} onAssessmentAdded={handleAssesmentAdded} />;
     }
     else {
@@ -55,12 +53,6 @@ export const ModalComponent = ({ courseId }) => {
             onClick={() => handleSwitchContent("register")}
           >
             Add Student
-          </Button>
-          <Button
-            type="outlineGray"
-            onClick={() => handleSwitchContent("addGrades")}
-          >
-            Add Grades
           </Button>
           <Button
             type="outlineGray"

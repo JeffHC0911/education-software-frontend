@@ -58,13 +58,12 @@ export const TableComponent = ({ courseId }) => {
       grades: assessment.grades.map((grade) => ({
         _id: grade._id,
         value: grade.value,
-        student: grade.student._id
+        student: grade.student ? grade.student._id.toString() : null,
       })),
     })),
   };
-  
-  //console.log("Combined Data:", combinedData);
 
+  //console.log("Combined Data:", combinedData);
 
   const calculateFinalGrade = (student, courseData) => {
     let finalGrade = 0;
@@ -77,21 +76,22 @@ export const TableComponent = ({ courseId }) => {
       );
 
       if (studentGrade) {
-        finalGrade += studentGrade.value * assessment.weighted;
-        totalWeighted += assessment.weighted;
+        const weight = assessment.weighted / 100; // Convertir porcentaje a fracción
+        finalGrade += studentGrade.value * weight;
+        totalWeighted += weight;
         hasGrades = true;
       }
     });
 
     if (!hasGrades) {
-      return "Sin notas";
+      return 0;
     }
 
     if (totalWeighted === 0) {
       return NaN;
     }
 
-    return finalGrade / totalWeighted;
+    return finalGrade;
   };
 
   const handleAddGrades = (studentId) => {
@@ -138,8 +138,11 @@ export const TableComponent = ({ courseId }) => {
             <p className="text-body-6 font-medium text-metal-400">Name</p>
           </Table.HeadCell>
           <Table.HeadCell>Status</Table.HeadCell>
-          {combinedData.assessments.map((assessment) => (
-            <Table.HeadCell className="min-w-[152px]" key={assessment._id}>
+          {combinedData.assessments.map((assessment, index) => (
+            <Table.HeadCell
+              className="min-w-[152px]"
+              key={`assessment-header-${assessment._id}-${index}`}
+            >
               {assessment.name} - {assessment.weighted} %
             </Table.HeadCell>
           ))}
@@ -148,7 +151,7 @@ export const TableComponent = ({ courseId }) => {
         </Table.Head>
         <Table.Body className="divide-gray-25 divide-y">
           {combinedData.students.map((student) => (
-            <Table.Row key={student.id} className="bg-white">
+            <Table.Row key={`student-${student.id}`} className="bg-white">
               <Table.Cell>
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-4">
@@ -172,12 +175,14 @@ export const TableComponent = ({ courseId }) => {
                   {student.status}
                 </Badge>
               </Table.Cell>
-              {combinedData.assessments.map((assessment) => {
+              {combinedData.assessments.map((assessment, index) => {
                 const studentGrade = assessment.grades.find(
                   (grade) => grade.student === student.id
                 );
                 return (
-                  <Table.Cell key={assessment._id}>
+                  <Table.Cell
+                    key={`assessment-${assessment._id}-${student.id}-${index}`}
+                  >
                     {studentGrade ? studentGrade.value : "N/A"}
                   </Table.Cell>
                 );
@@ -193,7 +198,11 @@ export const TableComponent = ({ courseId }) => {
                         <Check size={20} color="#008000" />
                       )}
                     </span>
-                    <span>{calculateFinalGrade(student, combinedData)}</span>
+                    <span>
+                      {Number.isNaN(calculateFinalGrade(student, combinedData))
+                        ? "Sin notas"
+                        : calculateFinalGrade(student, combinedData).toFixed(2)}
+                    </span>
                   </div>
                 </div>
               </Table.Cell>

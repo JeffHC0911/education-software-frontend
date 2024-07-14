@@ -187,6 +187,13 @@ export const useTeacherStore = () => {
       dispatch(
         onAddNewAssesment({ ...assesment, id: data.assesment.id, user })
       );
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Assessment has been saved",
+        showConfirmButton: false,
+        timer: 1500
+      });
     } catch (error) {
       console.log(error);
       Swal.fire("Error al guardar la evaluación", error.message, "error");
@@ -229,12 +236,6 @@ export const useTeacherStore = () => {
         const { data } = await educationSoftApi.post("/grade", grade);
         dispatch(onAddNewGrade({ ...grade, id: data.grade.id, user }));
         gradeId = data.grade._id;
-        console.log("gradeId", gradeId);
-        /*         Swal.fire(
-          "Calificación guardada",
-          "La calificación se ha guardado correctamente",
-          "success"
-        ); */
       }
 
       // Obtener la assesment actualizada y agregar el nuevo grade
@@ -249,12 +250,17 @@ export const useTeacherStore = () => {
           updatedAssesment
         );
         dispatch(onUpdateAssesment({ ...updatedAssesment, user }));
-        Swal.fire(
-          "Calificación guardada",
-          "La calificación se ha guardado correctamente",
-          "success"
-        );
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Grade added correct",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
+
+      await startLoadingGrade();
+
     } catch (error) {
       console.log(error);
       Swal.fire("Error al guardar la calificación", error.message, "error");
