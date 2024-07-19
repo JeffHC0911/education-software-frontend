@@ -3,6 +3,7 @@ import { LauchPage, LoginPage, RegisterPage } from '../auth'
 import {RegisterCouse, HomePage, RegisterStudent } from '../teacher'
 import { useAuthStore } from '../hooks'
 import { useEffect } from 'react'
+import { Spinner } from 'keep-react'
 
 export const AppRouter = () => {
 
@@ -14,7 +15,7 @@ export const AppRouter = () => {
 
     if (status === 'checking') {
         return (
-            <h3>Loading...</h3>
+            <Spinner color="info" size="lg" />
         )
     }
 

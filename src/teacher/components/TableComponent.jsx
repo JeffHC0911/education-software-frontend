@@ -14,6 +14,7 @@ import {
 } from "phosphor-react";
 import { useTeacherStore } from "../../hooks";
 import { AddGradesComponent } from "../index";
+import * as XLSX from "xlsx";
 
 export const TableComponent = ({ courseId }) => {
   const {
@@ -98,8 +99,46 @@ export const TableComponent = ({ courseId }) => {
     setSelectedStudentId(studentId);
   };
 
+  const exportToExcel = (combinedData) => {
+    const data = combinedData.students.map((student) => {
+      const rowData = {
+        Name: `${student.name} ${student.lastname}`,
+        Status: student.status,
+      };
+      combinedData.assessments.forEach((assessment) => {
+        const studentGrade = assessment.grades.find(
+          (grade) => grade.student === student.id
+        );
+        rowData[`${assessment.name} (${assessment.weighted}%)`] = studentGrade
+          ? studentGrade.value
+          : "N/A";
+      });
+      rowData["Definitive Grade"] = Number.isNaN(
+        calculateFinalGrade(student, combinedData)
+      )
+        ? "Sin notas"
+        : calculateFinalGrade(student, combinedData).toFixed(2);
+      return rowData;
+    });
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Grades");
+    XLSX.writeFile(workbook, "grades.xlsx");
+  };
+
   return (
     <div>
+      <div className="my-5 flex items-center justify-between px-6">
+        <Button
+          type="outlineGray"
+          size="sm"
+          onClick={() => exportToExcel(combinedData)}
+        >
+          Export to Excel
+        </Button>
+      </div>
+
       <Table
         showCheckbox={true}
         showBorder={true}
@@ -114,7 +153,8 @@ export const TableComponent = ({ courseId }) => {
                 Team member
               </p>
               <Badge size="xs" colorType="light" color="gray">
-                100 Member
+                {combinedData.students.length} Member
+                {combinedData.students.length !== 1 && "s"}
               </Badge>
             </div>
             <div className="flex items-center gap-5">
