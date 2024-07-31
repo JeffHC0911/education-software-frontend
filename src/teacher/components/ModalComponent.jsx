@@ -3,14 +3,20 @@
 "use client";
 import { useState } from "react";
 import { Button, Modal } from "keep-react";
-import { CloudArrowUp } from "phosphor-react";
+import { CloudArrowUp, Trash } from "phosphor-react";
 import { useTeacherStore } from "../../hooks";
-import { TableComponent, RegisterStudentComponent, AddGradesComponent, AddAssesmentsComponent } from "../index";
+import {
+  TableComponent,
+  RegisterStudentComponent,
+  AddGradesComponent,
+  AddAssesmentsComponent,
+} from "../index";
 
 export const ModalComponent = ({ courseId }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState("table");
-  const { startLoadingStudentsByCourse, startLoadingAssesments } = useTeacherStore();
+  const { startLoadingStudentsByCourse, startLoadingAssesments, startDeletingCourse } =
+    useTeacherStore();
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -27,19 +33,19 @@ export const ModalComponent = ({ courseId }) => {
 
   const handleAssesmentAdded = () => {
     startLoadingAssesments();
-  }
+  };
 
   const renderContent = () => {
     if (modalContent === "register") {
+      return <RegisterStudentComponent courseId={courseId} />;
+    } else if (modalContent === "add-assesment") {
       return (
-        <RegisterStudentComponent
+        <AddAssesmentsComponent
           courseId={courseId}
+          onAssessmentAdded={handleAssesmentAdded}
         />
       );
-    }else if(modalContent === "add-assesment"){
-      return <AddAssesmentsComponent courseId={courseId} onAssessmentAdded={handleAssesmentAdded} />;
-    }
-    else {
+    } else {
       return <TableComponent courseId={courseId} />;
     }
   };
@@ -71,14 +77,28 @@ export const ModalComponent = ({ courseId }) => {
     }
   };
 
+  const onDeleteCourse = () => {
+    startDeletingCourse({id: courseId});
+    handleCloseModal();
+  }
+
   return (
     <>
       <Button
         type="primary"
-        className="bg-palette-950 hover:bg-palette-400"
+        className="bg-palette-950 hover:bg-palette-400 mr-1"
         onClick={handleOpenModal}
       >
         View Course
+      </Button>
+      <Button
+        type="primary"
+        className="bg-red-500 hover:bg-palette-400 ml-1"
+        onClick={onDeleteCourse}
+      >
+        <span>
+          <Trash size={24} color="white" />
+        </span>
       </Button>
       <Modal
         icon={<CloudArrowUp size={28} color="#1B4DFF" />}

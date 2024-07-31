@@ -94,6 +94,16 @@ export const useTeacherStore = () => {
     try {
       await educationSoftApi.delete(`/course/${course.id}`);
       dispatch(onDeleteCourse(course.id));
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Course has been saved",
+        showConfirmButton: false,
+        timer: 1500
+      });
+
+      await startLoadingCourses();
+
     } catch (error) {
       console.log(error);
       Swal.fire("Error al eliminar el curso", error.message, "error");
