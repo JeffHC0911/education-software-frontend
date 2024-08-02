@@ -2,7 +2,7 @@
 "use client";
 // import Image from "next/image";
 import { useAuthStore } from '../../hooks'
-import { MagnifyingGlass } from "phosphor-react";
+import { MagnifyingGlass, SignOut } from "phosphor-react";
 import { Navbar, Button } from "keep-react";
 import Logo from '../../assets/img/fondo2.svg'
 
@@ -30,14 +30,12 @@ export const NavbarComponent = () => {
                     >
                         <Navbar.Link linkName="Home" />
                         <Navbar.Link linkName="Create Course" href='/create-course' />
-                        <Navbar.Link linkName="Register Students" href='/register-student' />
                         <Navbar.Link linkName="About" />
                     </Navbar.Container>
                     <Navbar.Collapse collapseType="sidebar">
                         <Navbar.Container tag="ul" className="flex flex-col gap-5">
                             <Navbar.Link linkName="Home" />
                             <Navbar.Link linkName="Create Course" href='/create-course' />
-                            <Navbar.Link linkName="Register Students" href='/register-student' />
                             <Navbar.Link linkName="About" />
                         </Navbar.Container>
                     </Navbar.Collapse>
@@ -48,16 +46,15 @@ export const NavbarComponent = () => {
                         className="btn btn-outline-danger"
                         onClick={startLogout}
                     >
-                        <i className="fas fa-sign-out-alt"></i>
-                        &nbsp;
-                        <span>Salir</span>
+                        <SignOut size={25} color="#FF0000" />
+                        {/* <span className=' text-2xl lg:text-lg'>Salir</span> */}
                     </button>
-                    <Button size="sm" type="link">
+{/*                     <Button size="sm" type="link">
                         <span>
                             <MagnifyingGlass size={20} color="#444" />
                         </span>
-                        <span className="ml-2 text-metal-600">Search</span>
-                    </Button>
+                        <span className="ml-2 text-metal-600 text-2xl">Search</span>
+                    </Button> */}
                     <Navbar.Toggle />
                 </Navbar.Container>
             </Navbar.Container>
