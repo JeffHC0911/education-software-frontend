@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 
+//TODO: Ajustar la recarga de la notas, estudiante y evaluaciones
+
 "use client";
 import { useEffect, useState } from "react";
 import { Badge, Button, Popover, Table } from "keep-react";
@@ -23,19 +25,30 @@ export const TableComponent = ({ courseId }) => {
     assesments,
     courses,
     startLoadingAssesments,
-    startLoadingCourses,
     startLoadingGrade,
     startLoadingStudents,
+    startDeletingStudent,
+    startDeletingAssesment,
+    startDeletingGrade,
   } = useTeacherStore();
 
   const [selectedStudentId, setSelectedStudentId] = useState(null);
 
+  const [shouldReloadGrades, setShouldReloadGrades] = useState(false);
+
   useEffect(() => {
     startLoadingAssesments();
-    startLoadingCourses();
     startLoadingStudents();
     startLoadingGrade();
   }, []);
+
+  // useEffect condicional para recargar notas
+  useEffect(() => {
+    if (shouldReloadGrades) {
+      startLoadingGrade();
+      setShouldReloadGrades(false);
+    }
+  }, [shouldReloadGrades]);
 
   // Filtrar cursos por el ID del curso proporcionado
   const course = courses.find((course) => course._id === courseId);
@@ -97,7 +110,21 @@ export const TableComponent = ({ courseId }) => {
 
   const handleAddGrades = (studentId) => {
     setSelectedStudentId(studentId);
+    setShouldReloadGrades(true);
   };
+
+  const handleDeleteStudent = (studentId) => {
+    startDeletingStudent({ id: studentId });
+  };
+
+  const handleDeleteAssesment = (assesmentId) => {
+    startDeletingAssesment({ id: assesmentId });
+  };
+
+  const handleDeleteGrade = (gradeId) => {
+    startDeletingGrade({ id: gradeId });
+    setShouldReloadGrades(true);
+  }
 
   const exportToExcel = (combinedData) => {
     const data = combinedData.students.map((student) => {
@@ -180,10 +207,15 @@ export const TableComponent = ({ courseId }) => {
           <Table.HeadCell>Status</Table.HeadCell>
           {combinedData.assessments.map((assessment, index) => (
             <Table.HeadCell
-              className="min-w-[152px]"
+              className="min-w-[152px] w-7"
               key={`assessment-header-${assessment._id}-${index}`}
             >
               {assessment.name} - {assessment.weighted} %
+              <Button className="bg-red-700 ml-2" size={60}>
+                <span>
+                  <Trash size={24} color="white" />
+                </span>
+              </Button>
             </Table.HeadCell>
           ))}
           <Table.HeadCell>Definitive Grade</Table.HeadCell>
@@ -219,11 +251,18 @@ export const TableComponent = ({ courseId }) => {
                 const studentGrade = assessment.grades.find(
                   (grade) => grade.student === student.id
                 );
+                
                 return (
                   <Table.Cell
+                    className="flex items-center justify-between"
                     key={`assessment-${assessment._id}-${student.id}-${index}`}
                   >
                     {studentGrade ? studentGrade.value : "N/A"}
+                    <Button className="bg-red-700" size={60} onClick={() => handleDeleteGrade(studentGrade._id)}>
+                      <span>
+                        <Trash size={24} color="white" />
+                      </span>
+                    </Button>
                   </Table.Cell>
                 );
               })}
@@ -255,7 +294,10 @@ export const TableComponent = ({ courseId }) => {
                   <Popover.Container className="!mt-0 !block">
                     <ul>
                       <li className="rounded px-2 py-1 hover:bg-metal-100">
-                        <button className="flex w-full items-center justify-between text-body-4 font-normal text-metal-600">
+                        <button
+                          className="flex w-full items-center justify-between text-body-4 font-normal text-metal-600"
+                          onClick={() => handleDeleteStudent(student.id)}
+                        >
                           <span>Delete</span>
                           <span>
                             <Trash />

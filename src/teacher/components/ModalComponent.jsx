@@ -12,7 +12,7 @@ import {
   AddAssesmentsComponent,
 } from "../index";
 
-export const ModalComponent = ({ courseId }) => {
+export const ModalComponent = ({ courseId, onCourseDeleted }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState("table");
   const { startLoadingStudentsByCourse, startLoadingAssesments, startDeletingCourse } =
@@ -77,8 +77,9 @@ export const ModalComponent = ({ courseId }) => {
     }
   };
 
-  const onDeleteCourse = () => {
-    startDeletingCourse({id: courseId});
+  const onDeleteCourse = async () => {
+    await startDeletingCourse({id: courseId});
+    onCourseDeleted(); 
     handleCloseModal();
   }
 

@@ -97,13 +97,10 @@ export const useTeacherStore = () => {
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "Course has been saved",
+        title: "Course has been deleted",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
-
-      await startLoadingCourses();
-
     } catch (error) {
       console.log(error);
       Swal.fire("Error al eliminar el curso", error.message, "error");
@@ -115,7 +112,13 @@ export const useTeacherStore = () => {
   const startLoadingCourses = async () => {
     try {
       const { data } = await educationSoftApi.get("/course");
-      dispatch(onLoadCourses(data.courses));
+      console.log(data);
+      
+      if (data && data.courses) {
+        dispatch(onLoadCourses(data.courses));
+      } else {
+        console.log("No hay cursos");
+      }
     } catch (error) {
       console.log("Error al cargar los courses: ", error);
       //Swal.fire('Error al cargar los cursos', error.message, 'error');
@@ -158,6 +161,11 @@ export const useTeacherStore = () => {
     try {
       await educationSoftApi.delete(`/student/${student.id}`);
       dispatch(onDeleteStudent(student.id));
+      Swal.fire(
+        "Estudiante eliminado",
+        "El estudiante se ha eliminado correctamente",
+        "success"
+      );
     } catch (error) {
       console.log(error);
       Swal.fire("Error al eliminar el estudiante", error.message, "error");
@@ -167,7 +175,11 @@ export const useTeacherStore = () => {
   const startLoadingStudents = async () => {
     try {
       const { data } = await educationSoftApi.get("/student");
-      dispatch(onLoadStudents(data.students));
+      if (data && data.students) {
+        dispatch(onLoadStudents(data.students));
+      } else {
+        console.log("No hay estudiantes");
+      }
     } catch (error) {
       console.log("Error al cargar los students");
       //Swal.fire('Error al cargar los estudiantes', error.message, 'error');
@@ -202,7 +214,7 @@ export const useTeacherStore = () => {
         icon: "success",
         title: "Assessment has been saved",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
     } catch (error) {
       console.log(error);
@@ -223,7 +235,12 @@ export const useTeacherStore = () => {
   const startLoadingAssesments = async () => {
     try {
       const { data } = await educationSoftApi.get("/assesment");
-      dispatch(onLoadAssesment(data.assesments));
+      
+      if (data && data.assesments) {
+        dispatch(onLoadAssesment(data.assesments));
+      } else {
+        console.log("No hay assesments");
+      }
     } catch (error) {
       console.log("Error al cargar los assesments");
       //Swal.fire('Error al cargar las evaluaciones', error.message, 'error');
@@ -270,7 +287,6 @@ export const useTeacherStore = () => {
       }
 
       await startLoadingGrade();
-
     } catch (error) {
       console.log(error);
       Swal.fire("Error al guardar la calificación", error.message, "error");
@@ -281,6 +297,13 @@ export const useTeacherStore = () => {
     try {
       await educationSoftApi.delete(`/grade/${grade.id}`);
       dispatch(onDeleteGrade(grade.id));
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Grade eliminated correct",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (error) {
       console.log(error);
       Swal.fire("Error al eliminar la calificación", error.message, "error");
@@ -290,7 +313,11 @@ export const useTeacherStore = () => {
   const startLoadingGrade = async () => {
     try {
       const { data } = await educationSoftApi.get("/grade");
-      dispatch(onLoadGrades(data.grades));
+      if(data && data.grades){
+        dispatch(onLoadGrades(data.grades));
+      }else{
+        console.log("No hay calificaciones");
+      }
     } catch (error) {
       console.log("Error al cargar los grades");
       //Swal.fire('Error al cargar las calificaciones', error.message, 'error');
