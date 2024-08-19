@@ -36,7 +36,7 @@ export const CardComponent = () => {
     <>
       {teacherCourses.map((course) => (
         <div key={course._id}>
-          <Card className="p-5 bg-slate-100  m-5 shadow-lg md: w-80">
+          <Card className="p-5 bg-gray-100  m-5 shadow-lg md: w-80">
             <Card.Container className="flex items-center justify-center">
               <PencilCircle size={100} color="#1F184E" />
             </Card.Container>
