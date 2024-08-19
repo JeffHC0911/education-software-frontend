@@ -12,7 +12,7 @@ export const NavbarComponent = () => {
 
     return (
         <Navbar fluid={true}>
-            <Navbar.Container className="flex items-center justify-between">
+            <Navbar.Container className="flex items-center justify-between lg:shadow-md lg:rounded-lg lg:fixed lg:top-0 lg:left-0 lg:right-0 lg:z-10 lg:bg-white">
                 <Navbar.Container className="flex items-center">
                     <Navbar.Brand>
                         {/* <Image
@@ -43,7 +43,7 @@ export const NavbarComponent = () => {
 
                 <Navbar.Container className="flex gap-2">
                     <button
-                        className="btn btn-outline-danger"
+                        className="btn btn-outline-danger lg:mr-4"
                         onClick={startLogout}
                     >
                         <SignOut size={25} color="#FF0000" />
