@@ -5,10 +5,12 @@ import { useAuthStore } from '../../hooks'
 import { MagnifyingGlass, SignOut } from "phosphor-react";
 import { Navbar, Button } from "keep-react";
 import Logo from '../../assets/img/fondo2.svg'
+import { useTranslation } from 'react-i18next';
 
 export const NavbarComponent = () => {
 
     const { startLogout } = useAuthStore();
+    const { t } = useTranslation();
 
     return (
         <Navbar fluid={true}>
@@ -28,15 +30,15 @@ export const NavbarComponent = () => {
                         tag="ul"
                         className="lg:flex hidden items-center justify-between gap-8"
                     >
-                        <Navbar.Link linkName="Home" />
-                        <Navbar.Link linkName="Create Course" href='/create-course' />
-                        <Navbar.Link linkName="About" />
+                        <Navbar.Link linkName={t('home') } />
+                        <Navbar.Link linkName={t('createcourse') } href='/create-course' />
+                        <Navbar.Link linkName={t('about') } />
                     </Navbar.Container>
                     <Navbar.Collapse collapseType="sidebar">
                         <Navbar.Container tag="ul" className="flex flex-col gap-5">
-                            <Navbar.Link linkName="Home" />
-                            <Navbar.Link linkName="Create Course" href='/create-course' />
-                            <Navbar.Link linkName="About" />
+                            <Navbar.Link linkName={t('home') } />
+                            <Navbar.Link linkName={t('createcourse') } href='/create-course' />
+                            <Navbar.Link linkName={t('about') } />
                         </Navbar.Container>
                     </Navbar.Collapse>
                 </Navbar.Container>

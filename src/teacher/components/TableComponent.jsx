@@ -17,8 +17,11 @@ import {
 import { useTeacherStore } from "../../hooks";
 import { AddGradesComponent } from "../index";
 import * as XLSX from "xlsx";
+import { useTranslation } from "react-i18next";
 
 export const TableComponent = ({ courseId }) => {
+  const { t } = useTranslation();
+
   const {
     students,
     grades,
@@ -177,7 +180,7 @@ export const TableComponent = ({ courseId }) => {
           <div className="my-5 flex items-center justify-between px-6">
             <div className="flex items-center gap-5">
               <p className="text-body-1 font-semibold text-metal-600">
-                Team member
+              {t('teammember') }
               </p>
               <Badge size="xs" colorType="light" color="gray">
                 {combinedData.students.length} Member
@@ -202,7 +205,7 @@ export const TableComponent = ({ courseId }) => {
         </Table.Caption>
         <Table.Head>
           <Table.HeadCell className="min-w-[290px]">
-            <p className="text-body-6 font-medium text-metal-400">Name</p>
+            <p className="text-body-6 font-medium text-metal-400">{t('name') }</p>
           </Table.HeadCell>
           <Table.HeadCell>Status</Table.HeadCell>
           {combinedData.assessments.map((assessment, index) => (
@@ -218,7 +221,7 @@ export const TableComponent = ({ courseId }) => {
               </Button>
             </Table.HeadCell>
           ))}
-          <Table.HeadCell>Definitive Grade</Table.HeadCell>
+          <Table.HeadCell>{t('definitivegrade') }</Table.HeadCell>
           <Table.HeadCell className="min-w-[100px]" />
         </Table.Head>
         <Table.Body className="divide-gray-25 divide-y">
@@ -317,7 +320,7 @@ export const TableComponent = ({ courseId }) => {
                           className="flex w-full items-center justify-between text-body-4 font-normal text-metal-600"
                           onClick={() => handleAddGrades(student.id)}
                         >
-                          <span>Add Grades</span>
+                          <span>{t('addgrades') }</span>
                           <span>
                             <Pencil />
                           </span>

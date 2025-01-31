@@ -11,8 +11,13 @@ import {
   AddGradesComponent,
   AddAssesmentsComponent,
 } from "../index";
+import { useTranslation } from "react-i18next";
+
 
 export const ModalComponent = ({ courseId, onCourseDeleted }) => {
+  const { t } = useTranslation();
+
+
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState("table");
   const { startLoadingStudentsByCourse, startLoadingAssesments, startDeletingCourse } =
@@ -90,7 +95,7 @@ export const ModalComponent = ({ courseId, onCourseDeleted }) => {
         className="bg-palette-950 hover:bg-palette-400 mr-1"
         onClick={handleOpenModal}
       >
-        View Course
+        {t('viewcourse') }
       </Button>
       <Button
         type="primary"
@@ -107,7 +112,7 @@ export const ModalComponent = ({ courseId, onCourseDeleted }) => {
         show={showModal}
         position="top-center"
       >
-        <Modal.Header>Manage grades</Modal.Header>
+        <Modal.Header>{t('managegrades') }</Modal.Header>
         <Modal.Body>
           <div className="overflow-auto max-h-[400px]">{renderContent()}</div>
         </Modal.Body>

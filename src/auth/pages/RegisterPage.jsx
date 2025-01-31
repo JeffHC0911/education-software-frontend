@@ -4,6 +4,7 @@ import { Envelope, Lock, User } from "phosphor-react";
 import { useAuthStore, useForm } from '../../hooks'
 import './RegisterPage.css';
 import Swal from 'sweetalert2';
+import { useTranslation } from 'react-i18next'; 
 
 import FondoDosSVG from '../../assets/img/fondo2.svg';
 
@@ -16,6 +17,7 @@ const registerFormFields = {
 
 export const RegisterPage = () => {
     const { startRegister, errorMessage } = useAuthStore();
+    const { t } = useTranslation();
 
 
     const { registerName, registerEmail, registerPassword, registerPassword2, onInputChange: onRegisterInputChange } = useForm(registerFormFields)
@@ -46,7 +48,7 @@ export const RegisterPage = () => {
 
     return (
         <div className="flex flex-col items-center m-auto bg-palette-400 h-screen">
-            <h2 className='title-register'>Create Account</h2>
+            <h2 className='title-register'>{t('register') } </h2>
 
             <img className='image' src={FondoDosSVG} alt="" />
 
@@ -122,7 +124,7 @@ export const RegisterPage = () => {
                     <input
                         type="submit"
                         className="btnSubmit w-full py-3 px-4 text-base font-medium text-center text-white bg-palette-950 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        value="Crear cuenta"
+                        value={t('register') } 
                     />
                 </div>
 

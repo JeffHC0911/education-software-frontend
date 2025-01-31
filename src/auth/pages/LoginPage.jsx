@@ -5,6 +5,7 @@ import { TextInput } from "keep-react";
 import { Envelope, Lock } from "phosphor-react";
 import './LoginPage.css';
 import Swal from "sweetalert2";
+import { useTranslation } from 'react-i18next'; 
 
 import FondoDosSVG from '../../assets/img/fondo2.svg';
 
@@ -14,6 +15,7 @@ const loginFormFields = {
 }
 
 export const LoginPage = () => {
+    const { t } = useTranslation();
 
     const styles = {
         width: "100%",
@@ -40,7 +42,7 @@ export const LoginPage = () => {
 
     return (
         <div className="flex flex-col items-center m-auto bg-palette-950 h-screen">
-            <h2 className='title-login'>Sign In</h2>
+            <h2 className='title-login'>{t('login') } </h2>
 
 
             <img className='image' src={FondoDosSVG} alt="FondoDos" transition-style="in:wipe:right" />

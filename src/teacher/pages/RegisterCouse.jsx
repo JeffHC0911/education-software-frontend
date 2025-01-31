@@ -1,5 +1,4 @@
-import { Label, Dropdown, DatePicker, Button } from "keep-react";
-
+import { Label } from "keep-react";
 import { useState } from "react";
 import { TeacherLayout } from "../";
 import { useTeacherStore } from "../../hooks";
@@ -33,113 +32,54 @@ export const RegisterCouse = () => {
     }
   };
 
-  //const [time, setTime] = useState(null);
-
-  // const daysOfWeek = [
-  //     "Monday",
-  //     "Tuesday",
-  //     "Wednesday",
-  //     "Thursday",
-  //     "Friday",
-  //     "Saturday",
-  //     "Sunday"
-  // ]
-
   return (
     <TeacherLayout>
-      <div className="max-w-2xl mx-auto  my-4 p-8 bg-gray-100 rounded-lg shadow-lg">
-        <nav></nav>
-        <h2 className="text-center text-3xl mb-8">Create Course</h2>
+      <div className="max-w-4xl mx-auto my-8 p-6 sm:p-8 bg-white rounded-lg shadow-lg">
+        <h2 className="text-center text-2xl sm:text-3xl font-bold text-gray-800 mb-6">
+          Create Course
+        </h2>
 
-        <form onSubmit={onSubmit}>
-          <div className="mb-8 ml-8 mr-8 shadow-xl lg:mb-4">
+        <form onSubmit={onSubmit} className="space-y-6">
+          {/* Nombre del curso */}
+          <div className="space-y-2">
             <Label
-              htmlFor="#id-name-course"
+              htmlFor="id-name-course"
               value="Name Course"
-              className="text-xl"
+              className="text-lg font-medium text-gray-700"
             />
             <input
-              id="#id-name-course"
-              className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300"
-              placeholder="Input Name Course"
-              color="gray"
-              sizing="lg"
+              id="id-name-course"
+              className="w-full px-4 py-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-300 focus:border-indigo-500"
+              placeholder="Enter the course name"
               name="name"
               value={formValue.name}
               onChange={onInputChanged}
             />
           </div>
 
-          <div className="mb-8 ml-8 mr-8 shadow-xl lg:mb-4">
+          {/* Horario del curso */}
+          <div className="space-y-2">
             <Label
-              htmlFor="#id-schedule-course"
+              htmlFor="id-schedule-course"
               value="Schedule Course"
-              className="text-xl"
+              className="text-lg font-medium text-gray-700"
             />
             <input
-              id="#id-schedule-course"
-              className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300"
-              placeholder="Input Schedule Course"
-              color="gray"
-              sizing="lg"
+              id="id-schedule-course"
+              className="w-full px-4 py-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-300 focus:border-indigo-500"
+              placeholder="Enter the course schedule"
               name="schedule"
               value={formValue.schedule}
               onChange={onInputChanged}
             />
           </div>
 
-          {/* <div className="mb-8 ml-8 mr-8 lg:mb-4">
-          <Label htmlFor="#id-day-one" value="Day One" className="text-xl" />
-          <Dropdown
-            label="Select a day"
-            size="lg"
-            type="primary"
-            dismissOnClick={true}
-            className="bg-palette-950 shadow-xl"
-          >
-            {daysOfWeek.map((day, index) => (
-              <Dropdown.Item key={index}>{day}</Dropdown.Item>
-            ))}
-          </Dropdown>
-        </div> */}
-
-          {/* <div className="mb-8 ml-8 mr-8 lg:mb-4">
-          <DatePicker
-            time={setTime}
-            placeholder="Select time"
-            className="shadow-xl"
-          >
-            <DatePicker.Time />
-          </DatePicker>
-        </div> */}
-
-          {/* <div className="mb-8 ml-8 mr-8 lg:mb-4">
-          <Label htmlFor="#id-day-two" value="Day Two" className="text-xl" />
-          <Dropdown
-            label="Select a day"
-            size="lg"
-            type="primary"
-            dismissOnClick={true}
-            className="bg-palette-950 shadow-xl"
-          >
-            {daysOfWeek.map((day, index) => (
-              <Dropdown.Item key={index}>{day}</Dropdown.Item>
-            ))}
-          </Dropdown>
-        </div> */}
-          {/* 
-        <div className="mb-2 ml-8 mr-8 lg:mb-4">
-          <DatePicker
-            time={setTime}
-            placeholder="Select time"
-            className="shadow-xl"
-          >
-            <DatePicker.Time />
-          </DatePicker>
-        </div> */}
-
-          <div className="flex justify-center mb-8">
-            <button size="md" type="submit" className="bg-palette-950 text-white rounded-lg p-2 lg:w-96">
+          {/* Botón de envío */}
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className="w-full sm:w-auto px-6 py-3 text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-lg transition-all"
+            >
               Create Course
             </button>
           </div>

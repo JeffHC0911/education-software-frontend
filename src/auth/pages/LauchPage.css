@@ -1,42 +1,46 @@
-.title{
+/* Título */
+.title {
     font-size: 3.3rem;
     font-weight: 700;
     color: #1F184E;
+    margin-bottom: 20px;
 }
 
-.image{
-    margin-top: 100px;
+/* Imagen */
+.image {
     width: 80%;
-    height: 100%;
+    height: auto;
+    max-height: 60vh; /* Evita que sea demasiado grande */
+    margin-bottom: 20px;
 }
 
-@media (min-width: 1024px) { 
-    .title{
-        font-size: 4.5rem;
-    }
-    .image{
-        margin-top: 0;
-        width: 50%;
-        height: 50%;
-    }
-    .buttons{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        width: 100%;
-    }
- }
+/* Botones */
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
- @media (min-width: 1280px) { 
-    .image{
-        margin-top: 0;
-        width: 35%;
-        height: 50%;
-    }
-    .buttons{
-        display: flex;
+/* Estilos para pantallas grandes */
+@media (min-width: 1024px) { 
+    .container {
         flex-direction: row;
-        justify-content: space-around;
-        width: 100%;
+        justify-content: space-between;
+        padding: 0 10%;
     }
- }
+
+    .title {
+        font-size: 3rem;
+    }
+
+    .image {
+        width: 70%;
+        max-height: 30vh;
+    }
+
+    .buttons {
+        flex-direction: row;
+        width: auto;
+        gap: 20px;
+    }
+}
